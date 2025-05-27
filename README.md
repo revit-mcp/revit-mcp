@@ -61,6 +61,25 @@ Restart the Claude client. When you see the hammer icon, it means the connection
 
 ![claude](./assets/claude.png)
 
+### 3. Connecting via HTTP/SSE (Alternative)
+
+Besides the standard Stdio transport used by clients like the Claude desktop app, `revit-mcp` now also supports an HTTP-based transport. This allows for more versatile connections from various clients, such as automation platforms (e.g., n8n), custom scripts, or web applications.
+
+This HTTP transport adheres to the Model Context Protocol (MCP) and uses a Server-Sent Events (SSE) like mechanism for real-time, bidirectional communication (though actual message exchange follows MCP's JSON-RPC structure over HTTP POST for client-to-server and SSE for server-to-client notifications).
+
+**Connection Details:**
+
+*   **Default Port:** The HTTP server listens on port `3000` by default.
+*   **Custom Port:** You can configure a different port by setting the `MCP_HTTP_PORT` environment variable before starting the server (e.g., `MCP_HTTP_PORT=3001 node build/index.js`).
+*   **Endpoint Path:** The standard MCP endpoint path used by the `@modelcontextprotocol/sdk`'s `StreamableHTTPServerTransport` is `/mcp`.
+*   **Full URL Example:** `http://localhost:3000/mcp` (if using the default port).
+
+**Client Connection:**
+
+Clients can connect to this endpoint using libraries compatible with the MCP Streamable HTTP transport. For server-to-client notifications (which behave like SSE), clients would typically establish a GET request to the `/mcp` endpoint. Client-to-server messages are sent via POST requests to the same `/mcp` endpoint.
+
+For example, a JavaScript client might use a library that implements the MCP client-side Streamable HTTP transport, or manually construct requests according to the MCP specification (POST for sending commands/data, and handling an SSE stream from GET for server pushes). Standard `EventSource` APIs might be used for the notification aspect if the client library abstracts MCP details.
+
 ## Framework
 
 ```mermaid

@@ -10,7 +10,8 @@
   "scripts": {
     "clean": "rimraf build",
     "prebuild": "npm run clean",
-    "build": "tsc"
+    "build": "tsc",
+    "test:integration:http": "node test/http_transport_integration.test.js"
   },
   "files": [
     "build"
