@@ -1,48 +1,48 @@
-import { RevitClientConnection } from "./SocketClient.js";
+import { ApplicationClientConnection } from "./SocketClient.js";
 
 /**
- * 连接到Revit客户端并执行操作
+ * 连接到应用程序客户端并执行操作
  * @param operation 连接成功后要执行的操作函数
  * @returns 操作的结果
  */
-export async function withRevitConnection<T>(
-  operation: (client: RevitClientConnection) => Promise<T>
+export async function withApplicationConnection<T>(
+  operation: (client: ApplicationClientConnection) => Promise<T>
 ): Promise<T> {
-  const revitClient = new RevitClientConnection("localhost", 8080);
+  const appClient = new ApplicationClientConnection("localhost", 8080); // Default port, may need to be configured for Civil 3D plugin
 
   try {
-    // 连接到Revit客户端
-    if (!revitClient.isConnected) {
+    // 连接到应用程序客户端
+    if (!appClient.isConnected) {
       await new Promise<void>((resolve, reject) => {
         const onConnect = () => {
-          revitClient.socket.removeListener("connect", onConnect);
-          revitClient.socket.removeListener("error", onError);
+          appClient.socket.removeListener("connect", onConnect);
+          appClient.socket.removeListener("error", onError);
           resolve();
         };
 
         const onError = (error: any) => {
-          revitClient.socket.removeListener("connect", onConnect);
-          revitClient.socket.removeListener("error", onError);
-          reject(new Error("connect to revit client failed"));
+          appClient.socket.removeListener("connect", onConnect);
+          appClient.socket.removeListener("error", onError);
+          reject(new Error("connect to application client failed"));
         };
 
-        revitClient.socket.on("connect", onConnect);
-        revitClient.socket.on("error", onError);
+        appClient.socket.on("connect", onConnect);
+        appClient.socket.on("error", onError);
 
-        revitClient.connect();
+        appClient.connect();
 
         setTimeout(() => {
-          revitClient.socket.removeListener("connect", onConnect);
-          revitClient.socket.removeListener("error", onError);
-          reject(new Error("连接到Revit客户端失败"));
+          appClient.socket.removeListener("connect", onConnect);
+          appClient.socket.removeListener("error", onError);
+          reject(new Error("连接到应用程序客户端失败"));
         }, 5000);
       });
     }
 
     // 执行操作
-    return await operation(revitClient);
+    return await operation(appClient);
   } finally {
     // 断开连接
-    revitClient.disconnect();
+    appClient.disconnect();
   }
 }

@@ -1,6 +1,6 @@
 import * as net from "net";
 
-export class RevitClientConnection {
+export class ApplicationClientConnection {
   host: string;
   port: number;
   socket: net.Socket;
@@ -34,7 +34,7 @@ export class RevitClientConnection {
     });
 
     this.socket.on("error", (error) => {
-      console.error("RevitClientConnection error:", error);
+      console.error("ApplicationClientConnection error:", error);
       this.isConnected = false;
     });
   }
@@ -114,7 +114,7 @@ export class RevitClientConnection {
             const response = JSON.parse(responseData);
             if (response.error) {
               reject(
-                new Error(response.error.message || "Unknown error from Revit")
+                new Error(response.error.message || "Unknown error from Application")
               );
             } else {
               resolve(response.result);

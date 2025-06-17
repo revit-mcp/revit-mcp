@@ -1,11 +1,11 @@
 {
-  "name": "revit-mcp",
+  "name": "civil3d-mcp",
   "version": "1.0.0",
-  "description": "- `create_object` - Create a new object with detailed parameters\r - `delete_object` - Remove an object from view\r - `modify_object` - Modify an existing object's properties",
+  "description": "MCP server for interacting with Autodesk Civil 3D.",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "revit-mcp": "./build/index.js"
+    "civil3d-mcp": "./build/index.js"
   },
   "scripts": {
     "clean": "rimraf build",
@@ -17,15 +17,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lisiting01/revit-mcp.git"
+    "url": "git+https://github.com/civil3d-mcp/civil3d-mcp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lisiting01/revit-mcp/issues"
+    "url": "https://github.com/civil3d-mcp/civil3d-mcp/issues"
   },
-  "homepage": "https://github.com/lisiting01/revit-mcp#readme",
+  "homepage": "https://github.com/civil3d-mcp/civil3d-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
     "ws": "^8.18.1",
