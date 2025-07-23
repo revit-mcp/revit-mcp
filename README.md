@@ -3,8 +3,6 @@
 
 # revit-mcp
 
-日本語 | [简体中文](README_zh.md)
-
 ## 説明
 
 revit-mcpは、MCPプロトコルに対応したクライアント（Claude、Clineなど）を通じてRevitと連携できるツールです。
