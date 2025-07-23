@@ -1,67 +1,68 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/revit-mcp-revit-mcp-badge.png)](https://mseep.ai/app/revit-mcp-revit-mcp)
+
+[![MseeP.ai セキュリティ評価バッジ](https://mseep.net/pr/revit-mcp-revit-mcp-badge.png)](https://mseep.ai/app/revit-mcp-revit-mcp)
 
 # revit-mcp
 
-English | [简体中文](README_zh.md)
+日本語 | [简体中文](README_zh.md)
 
-## Description
+## 説明
 
-revit-mcp allows you to interact with Revit using the MCP protocol through MCP-supported clients (such as Claude, Cline, etc.).
+revit-mcpは、MCPプロトコルに対応したクライアント（Claude、Clineなど）を通じてRevitと連携できるツールです。
 
-This project is the server side (providing Tools to AI), and you need to use [revit-mcp-plugin](https://github.com/revit-mcp/revit-mcp-plugin) (driving Revit) in conjunction.
+本プロジェクトはサーバー側（AIにツールを提供）であり、[revit-mcp-plugin](https://github.com/revit-mcp/revit-mcp-plugin)（Revitを操作するプラグイン）と併用する必要があります。
 
-Join [Discord](https://discord.gg/cGzUGurq) | [QQ Group](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=kLnQiFVtYBytHm7R58KFoocd3mzU_9DR&authKey=fyXDOBmXP7FMkXAWjddWZumblxKJH7ZycYyLp40At3t9%2FOfSZyVO7zyYgIROgSHF&noverify=0&group_code=792379482)
+[Discordに参加](https://discord.gg/cGzUGurq) | [QQグループ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=kLnQiFVtYBytHm7R58KFoocd3mzU_9DR&authKey=fyXDOBmXP7FMkXAWjddWZumblxKJH7ZycYyLp40At3t9%2FOfSZyVO7zyYgIROgSHF&noverify=0&group_code=792379482)
 
-## Features
+## 特徴
 
-- Allow AI to get data from the Revit project
-- Allow AI to drive Revit to create, modify, and delete elements
-- Send AI-generated code to Revit to execute (may not be successful, successful rate is higher in some simple scenarios with clear requirements)
+- AIがRevitプロジェクトのデータを取得可能
+- AIがRevitの要素の作成・編集・削除を操作可能
+- AIが生成したコードをRevitに送信して実行可能（必ず成功するとは限りません。要件が明確な単純なシナリオでは成功率が高いです）
 
-## Requirements
+## 必要条件
 
-- nodejs 18+
+- nodejs 18以上
 
-> Complete installation environment still needs to consider the needs of revit-mcp-plugin, please refer to [revit-mcp-plugin](https://github.com/revit-mcp/revit-mcp-plugin)
+> 完全なインストール環境についてはrevit-mcp-pluginの要件も考慮する必要があります。詳細は[revit-mcp-plugin](https://github.com/revit-mcp/revit-mcp-plugin)をご参照ください。
 
-## Installation
+## インストール
 
-### 1. Build local MCP service
+### 1. ローカルMCPサービスのビルド
 
-Install dependencies
+依存関係のインストール
 
 ```bash
 npm install
 ```
 
-Build
+ビルド
 
 ```bash
 npm run build
 ```
 
-### 2. Client configuration
+### 2. クライアント設定
 
-**Claude client**
+**Claudeクライアント**
 
-Claude client -> Settings > Developer > Edit Config > claude_desktop_config.json
+Claudeクライアント → 設定 > 開発者 > 設定を編集 > claude_desktop_config.json
 
 ```json
 {
-    "mcpServers": {
-        "revit-mcp": {
-            "command": "node",
-            "args": ["<path to the built file>\\build\\index.js"]
-        }
-    }
+	"mcpServers": {
+		"revit-mcp": {
+			"command": "node",
+			"args": ["<ビルド済みファイルへのパス>\\build\\index.js"]
+		}
+	}
 }
 ```
 
-Restart the Claude client. When you see the hammer icon, it means the connection to the MCP service is normal.
+Claudeクライアントを再起動してください。ハンマーアイコンが表示されれば、MCPサービスとの接続が正常です。
 
 ![claude](./assets/claude.png)
 
-## Framework
+## フレームワーク
 
 ```mermaid
 flowchart LR
@@ -87,22 +88,22 @@ flowchart LR
 	end
 ```
 
-## Supported Tools
+## サポートされているツール
 
-| Name                      | Description                               |
-| ------------------------- | ----------------------------------------- |
-| get_current_view_info     | Get current view info                     |
-| get_current_view_elements | Get current view elements                 |
-| get_available_family_types | Get available family types in current project |
-| get_selected_elements      | Get selected elements                      |
-| create_point_based_element  | Create point based element (door, window, furniture) |
-| create_line_based_element   | Create line based element (wall, beam, pipe) |
-| create_surface_based_element   | Create surface based element (floor, ceiling) |
-| delete_elements             | Delete elements                            |
-| reset_model                | Reset model (delete process model when executing continuous dialog) |
-| modify_element             | Modify element's properties (instance parameters) |
-| search_modules             | Search for available modules              |
-| use_module                 | Use module                                |
-| send_code_to_revit         | Send code to Revit to execute             |
-| color_splash		     | Color elements based on a parameter value	|
-| tag_walls		     | Tag all walls in view            |
+| 名前                        | 説明                                         |
+| --------------------------- | -------------------------------------------- |
+| get_current_view_info       | 現在のビュー情報を取得                       |
+| get_current_view_elements   | 現在のビューの要素を取得                     |
+| get_available_family_types  | 現在のプロジェクトで利用可能なファミリータイプを取得 |
+| get_selected_elements       | 選択中の要素を取得                           |
+| create_point_based_element  | 点基準の要素を作成（ドア、窓、家具など）      |
+| create_line_based_element   | 線基準の要素を作成（壁、梁、パイプなど）      |
+| create_surface_based_element| 面基準の要素を作成（床、天井など）           |
+| delete_elements             | 要素を削除                                   |
+| reset_model                 | モデルをリセット（連続対話時にプロセスモデルを削除）|
+| modify_element              | 要素のプロパティ（インスタンスパラメータ）を編集 |
+| search_modules              | 利用可能なモジュールを検索                   |
+| use_module                  | モジュールを利用                             |
+| send_code_to_revit          | Revitにコードを送信して実行                  |
+| color_splash                | パラメータ値に基づき要素に色付け             |
+| tag_walls                   | ビュー内の全ての壁にタグ付け                 |

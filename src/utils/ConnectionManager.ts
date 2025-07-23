@@ -1,9 +1,9 @@
 import { RevitClientConnection } from "./SocketClient.js";
 
 /**
- * 连接到Revit客户端并执行操作
- * @param operation 连接成功后要执行的操作函数
- * @returns 操作的结果
+ * Revitクライアントに接続して操作を実行する
+ * @param operation 接続成功後に実行する操作関数
+ * @returns 操作の結果
  */
 export async function withRevitConnection<T>(
   operation: (client: RevitClientConnection) => Promise<T>
@@ -34,7 +34,7 @@ export async function withRevitConnection<T>(
         setTimeout(() => {
           revitClient.socket.removeListener("connect", onConnect);
           revitClient.socket.removeListener("error", onError);
-          reject(new Error("连接到Revit客户端失败"));
+          reject(new Error("Revitクライアントへの接続に失敗しました"));
         }, 5000);
       });
     }
