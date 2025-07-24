@@ -4,7 +4,7 @@ import { withRevitConnection } from "../utils/ConnectionManager.js";
 export function registerGetCurrentViewInfoTool(server: McpServer) {
   server.tool(
     "get_current_view_info",
-    "获取 Revit 当前活动视图的详细信息，包括视图类型、名称、比例等属性。",
+    "Get detailed information about the current active view in Revit, including view type, name, scale, and other properties.",
     {},
     async (args, extra) => {
       try {
